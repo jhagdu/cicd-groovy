@@ -36,6 +36,7 @@ deliveryPipelineView("CICD") {
   enableManualTriggers(true)
   linkToConsoleLog(true)
   pipelineInstances(1)
+  allowPipelineStart(true)
   pipelines {
     component("RollOut Update", "3-Update Env")
   }
