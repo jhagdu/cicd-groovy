@@ -1,4 +1,4 @@
-job("3-Update Env") {
+job("1-Update Env") {
   description("Update Environment -- Pull Code -> Build Image -> Push to Docker Hub")
 
   scm {
@@ -15,7 +15,7 @@ job("3-Update Env") {
 }
 
 
-job("4-RollOut Updates") {
+job("2-RollOut Updates") {
   description("RollOut Updates by contacting to Kubernetes")
 
   parameters {
@@ -23,11 +23,11 @@ job("4-RollOut Updates") {
   }
 
   triggers {
-    upstream("3-Update Env","SUCCESS")
+    upstream("1-Update Env","SUCCESS")
   }
 
   steps {
-    shell(readFileFromWorkspace("job4Script.sh"))
+    shell(readFileFromWorkspace("job2Script.sh"))
   }
 }
 
@@ -38,6 +38,7 @@ deliveryPipelineView("CICD") {
   pipelineInstances(1)
   allowPipelineStart(true)
   pipelines {
-    component("RollOut Update", "3-Update Env")
+    component("RollOut Update", "1-Update Env")
   }
 }
+
